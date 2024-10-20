@@ -10,20 +10,26 @@ package Lista;
  */
 public class Parada {
     private String nombre;
-    private ListaAdyacencia conexiones; // Lista de conexiones directas a otras paradas
+    private int numeroParada; // Numero asignado para identificar a la parada
+    private ListaEnlazada conexiones; // Lista de conexiones directas a otras paradas
     private boolean esSucursal;
     
 
     public Parada(String nombre) {
         this.nombre = nombre;
         this.esSucursal = false;
-        this.conexiones = new ListaAdyacencia();
+        this.conexiones = new ListaEnlazada();
+        this.numeroParada = -1;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    public void setNumeroParada(int numero){
+        this.numeroParada = numero;
+    }
+    
     public String getNombre() {
         return nombre;
     }
