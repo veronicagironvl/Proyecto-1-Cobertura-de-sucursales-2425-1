@@ -9,5 +9,5 @@ package Lista;
  * @author veron
  */
 public class Grafo {
-    private
+    
 }
