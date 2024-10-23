@@ -4,6 +4,8 @@
  */
 package Lista;
 
+import Lista.ListaEnlazada;
+
 /**
  *
  * @author veron
@@ -19,7 +21,7 @@ public class Parada {
         this.nombre = nombre;
         this.esSucursal = false;
         this.conexiones = new ListaEnlazada();
-        this.idParada = -1;
+        this.idParada = 0;
     }
 
     public void setNombre(String nombre) {
@@ -35,7 +37,7 @@ public class Parada {
     }
     
     public void agregarConexion(Parada parada){
-        
+        this.conexiones.agregar(parada);
     }
     
     public boolean esSucursal(){

@@ -9,5 +9,22 @@ package Lista;
  * @author veron
  */
 public class ListaEnlazada {
-    
+    Nodo cabeza;
+
+    public ListaEnlazada() {
+        this.cabeza = null;
+    }
+
+    public void agregar(Object dato) {
+        Nodo nuevoNodo = new Nodo(dato);
+        if (cabeza == null) {
+            cabeza = nuevoNodo;
+        } else {
+            Nodo actual = cabeza;
+            while (actual.siguiente != null) {
+                actual = actual.siguiente;
+            }
+            actual.siguiente = nuevoNodo;
+        }
+    }
 }

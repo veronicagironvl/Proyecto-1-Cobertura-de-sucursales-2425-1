@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
+import Lista.RedTransporte;
+import Lista.Linea;
+import Lista.Parada;
 import java.awt.BorderLayout;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
@@ -14,9 +17,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import static interfaz.Main.procesarRedDeTransporte;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -303,15 +309,32 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_principal1ActionPerformed
 
     private void subirarchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subirarchivoActionPerformed
-         JFileChooser selarchivo = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(" Archivos JSON", "json");
-        selarchivo.setFileFilter(filter);
-        int val = selarchivo.showOpenDialog(null);
-        if (val == JFileChooser.APPROVE_OPTION){
-            if(selarchivo.getSelectedFile() != null){
-            JOptionPane.showMessageDialog(null,"El archvo seleccionado es: " +
-            selarchivo.getSelectedFile().getName());}}
-        else {
+         JFileChooser seleccionarArchivo = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter(" Archivos JSON", "json");
+        seleccionarArchivo.setFileFilter(filtro);
+        int val = seleccionarArchivo.showOpenDialog(null);
+        
+        if (val == JFileChooser.APPROVE_OPTION && seleccionarArchivo.getSelectedFile() != null){
+            File archivosDatos = seleccionarArchivo.getSelectedFile();
+            JOptionPane.showMessageDialog(null,"El archvo seleccionado es: " + archivosDatos.getName());
+            
+            try{
+                // Leer el archivo JSON
+                BufferedReader lector = new BufferedReader(new FileReader(archivosDatos));
+                JsonParser parser = new JsonParser();
+                JsonObject jsonObject = JsonParser.parseReader(lector).getAsJsonObject();
+                lector.close();
+                
+                RedTransporte redTransporte = new RedTransporte();
+                
+                procesarRedDeTransporte(jsonObject, redTransporte);
+            } catch (IOException e){
+                JOptionPane.showMessageDialog(null,  "Error al leer el archivo: " + e.getMessage());
+            } catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Error al procesar el archivo Json " + e.getMessage());
+            }
+            
+        } else {
             JOptionPane.showMessageDialog(null,"Archivo no seleccionado");
         }
     }//GEN-LAST:event_subirarchivoActionPerformed
