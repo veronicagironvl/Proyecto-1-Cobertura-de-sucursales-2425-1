@@ -5,15 +5,18 @@
 package interfaz;
 
 import Lista.Grafo;
+import Lista.Nodo;
 import Lista.Parada;
+import Lista.ListaDobleEnlazada;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
-import org.graphstream.ui.view.ViewPanel;
-import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.swing_viewer.SwingViewer;
+import org.graphstream.ui.swing_viewer.ViewPanel;
+import org.graphstream.graph.Node;
 
 
 
@@ -205,25 +208,51 @@ public final class Principal extends javax.swing.JPanel {
     private void mostrarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarGrafoActionPerformed
         Graph grafoVisual = new SingleGraph("Grafo de Transporte");
 
-        grafo.getNodos().forEach(parada -> {
+        // Obtener las listas de paradas con sucursales y cubiertas por zona comercial
+        ListaDobleEnlazada paradasConSucursales = grafo.obtenerParadasConSucursales();
+        ListaDobleEnlazada paradasCubiertas = grafo.obtenerParadasCubiertas();
+
+        Nodo nodoActual = grafo.getNodos().getCabeza();  
+    
+        while (nodoActual != null) {
+            Parada parada = nodoActual.getParada();
             String nombreParada = parada.getNombre();
+        
             if (grafoVisual.getNode(nombreParada) == null) {
-                grafoVisual.addNode(nombreParada).setAttribute("ui.label", nombreParada);
+                Node nodoGraficado = grafoVisual.addNode(nombreParada);
+                nodoGraficado.setAttribute("ui.label", nombreParada);
+            
+                // Asignar colores en función del estado
+                if (paradasConSucursales.buscar(parada)) {
+                    nodoGraficado.setAttribute("ui.style", "fill-color: red;");  // Paradas con sucursales (color rojo)
+                } else if (paradasCubiertas.buscar(parada)) {
+                    nodoGraficado.setAttribute("ui.style", "fill-color: yellow;");  // Paradas cubiertas (color amarillo)
+                } else {
+                    nodoGraficado.setAttribute("ui.style", "fill-color: gray;");  // Paradas no cubiertas (color gris)
+                }
             }
 
-            parada.getConexiones().forEach(conexion -> {
-                String nombreConexion = conexion.getDestino().getNombre();
+            // Procesar las conexiones de la parada
+            Nodo conexionActual = parada.getConexiones().getCabeza();  
+            while (conexionActual != null) {
+                Parada conexion = conexionActual.getParada();
+                String nombreConexion = conexion.getNombre();
                 String idArista = nombreParada + "-" + nombreConexion;
-                
+
                 if (grafoVisual.getEdge(idArista) == null && grafoVisual.getEdge(nombreConexion + "-" + nombreParada) == null) {
                     grafoVisual.addEdge(idArista, nombreParada, nombreConexion);
                 }
-            });
-        });
 
-        Viewer viewer = new Viewer(grafoVisual, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+                conexionActual = conexionActual.getpNext();
+            }
+        
+            nodoActual = nodoActual.getpNext();
+        }
+
+        // Mostrar el grafo en el panel
+        SwingViewer viewer = new SwingViewer(grafoVisual, SwingViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
-        ViewPanel viewPanel = viewer.addDefaultView(false);
+        ViewPanel viewPanel = (ViewPanel) viewer.addDefaultView(false);
 
         panelGrafVisual.removeAll();
         panelGrafVisual.setLayout(new BorderLayout());
