@@ -6,30 +6,30 @@ package Lista;
 
 /**
  *
- * @author veron
+ * @author rtkn0_z8ls
  */
 public class Linea {
-    private String nombre;
-    ListaEnlazada paradas; // Lista enlazada de paradas
-    
-    public Linea(String nombre){
+    private String nombre; // Nombre de la linea el sistema de transporte correspondiente 
+    private ListaDobleEnlazada lineaParadas;
+
+    public Linea(String nombre) {
         this.nombre = nombre;
-        this.paradas = new ListaEnlazada();
-    }
-    
-    public void agregarParada(Parada parada){
-        paradas.agregar(parada);
+        
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombreLinea(String nombre) {
         this.nombre = nombre;
     }
-
-
+     public void agregarParada(Parada parada) {
+        lineaParadas.agregarAlFinal(parada);
+    }
     
+    
+
+ 
     
 }

@@ -4,48 +4,49 @@
  */
 package Lista;
 
-import Lista.ListaEnlazada;
-
 /**
  *
  * @author veron
  */
 public class Parada {
     private String nombre;
-    private int idParada; // Numero identificador asignado para identificar a la parada
-    private ListaEnlazada conexiones; // Lista de conexiones directas a otras paradas
-    private boolean esSucursal;
+    private ListaDobleEnlazada conexiones;
+    private boolean tieneSucursal;
+    private ListaDobleEnlazada zonaComercial;
     
-
-    public Parada(String nombre) {
+    public Parada(String nombre){
         this.nombre = nombre;
-        this.esSucursal = false;
-        this.conexiones = new ListaEnlazada();
-        this.idParada = 0;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setIDParada(int numero){
-        this.idParada = numero;
+        this.conexiones = new ListaDobleEnlazada();
+        this.tieneSucursal = false;
+        this.zonaComercial = new ListaDobleEnlazada();
     }
     
-    public String getNombre() {
+    public String getNombre(){
         return nombre;
     }
     
+    public  ListaDobleEnlazada getConexiones(){
+        return conexiones;
+    }
+    
     public void agregarConexion(Parada parada){
-        this.conexiones.agregar(parada);
+        conexiones.agregarAlFinal(parada);
     }
     
-    public boolean esSucursal(){
-        return esSucursal;
+    public boolean tieneSucursal(){
+        return tieneSucursal;
     }
     
-    public void setEsSucursal(boolean esSucursal){
-        this.esSucursal = esSucursal;
+    public void colocarSucursal(){
+        this.tieneSucursal = true;
     }
     
+    public void removerSucursal(){
+        this.tieneSucursal = false;
+        this.zonaComercial.vaciarLista(); // Limpia la zona comercial
+    }
+    
+    public ListaDobleEnlazada getZonaComercial(){
+        return zonaComercial;
+    }
 }
