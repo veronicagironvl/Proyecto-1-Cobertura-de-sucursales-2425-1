@@ -9,11 +9,39 @@ package Lista;
  * @author veron
  */
 public class Nodo {
-    Object dato;
-    Nodo siguiente;
+    private Parada parada;
+    private Nodo pNext;
+    private Nodo pPrev;
 
-    public Nodo(Object dato) {
-        this.dato = dato;
-        this.siguiente = null;
+    // Constructor que inicializa con una parada
+    public Nodo(Parada parada) {
+        this.parada = parada;
+        this.pNext = null;
+        this.pPrev = null;
+    }
+
+    // Getters y Setters
+    public Parada getParada() {
+        return parada;
+    }
+
+    public void setParada(Parada parada) {
+        this.parada = parada;
+    }
+
+    public Nodo getpNext() {
+        return pNext;
+    }
+
+    public void setpNext(Nodo pNext) {
+        this.pNext = pNext;
+    }
+
+    public Nodo getpPrev() {
+        return pPrev;
+    }
+
+    public void setpPrev(Nodo pPrev) {
+        this.pPrev = pPrev;
     }
 }
