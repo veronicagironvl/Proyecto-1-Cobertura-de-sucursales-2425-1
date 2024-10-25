@@ -43,64 +43,31 @@ public class Grafo {
     }
     
     // DFS para calcular cobertura de sucursal
-    public void calcularCoberturaDFS(Parada sucursal, int limite){
+    public void calcularCoberturaDFS(Parada sucursal, int limite) {
         ListaDobleEnlazada visitadas = new ListaDobleEnlazada();
         dfs(sucursal, limite, visitadas);
         sucursal.getZonaComercial().vaciarLista();
-        
-        Nodo nodo = visitadas.getCabeza();
-        while(nodo != null){
-            sucursal.getZonaComercial().agregarAlFinal(nodo.getParada());
-            nodo = nodo.getpNext();
-        }
-    }
-    
-    private void dfs(Parada parada, int limite, ListaDobleEnlazada visitadas){
-        if(limite <0 || visitadas.buscar(parada)) return;
-        visitadas.agregarAlFinal(parada);
-        
-        Nodo conexion = parada.getConexiones().getCabeza();
-        while (conexion != null){
-            dfs(conexion.getParada(), limite - 1, visitadas);
-            conexion = conexion.getpNext();
-        }
-    }
-    
-    // BFS para calcular cobertura de sucursal (alternativa)
-    public void calcularCoberturaBFS(Parada sucursal, int limite) {
-        ListaDobleEnlazada cola = new ListaDobleEnlazada();
-        ListaDobleEnlazada visitadas = new ListaDobleEnlazada();
 
-        cola.agregarAlFinal(sucursal);
-        visitadas.agregarAlFinal(sucursal);
-
-        int nivel = 0;
-        while (!cola.isEmpty() && nivel <= limite) {
-            int nivelSize = cola.getSize();
-            for (int i = 0; i < nivelSize; i++) {
-                Parada actual = cola.obtenerNodoEnPosicion(0).getParada();
-                cola.vaciarLista();
-
-                Nodo conexion = actual.getConexiones().getCabeza();
-                while (conexion != null) {
-                    Parada vecino = conexion.getParada();
-                    if (!visitadas.buscar(vecino)) {
-                        cola.agregarAlFinal(vecino);
-                        visitadas.agregarAlFinal(vecino);
-                    }
-                    conexion = conexion.getpNext();
-                }
-            }
-            nivel++;
-        }
-
-        sucursal.getZonaComercial().vaciarLista();
         Nodo nodo = visitadas.getCabeza();
         while (nodo != null) {
             sucursal.getZonaComercial().agregarAlFinal(nodo.getParada());
             nodo = nodo.getpNext();
         }
     }
+    
+    private void dfs(Parada parada, int limite, ListaDobleEnlazada visitadas) {
+        if (limite < 0 || visitadas.buscar(parada)) return;
+        visitadas.agregarAlFinal(parada);
+
+        Nodo conexion = parada.getConexiones().getCabeza();
+        while (conexion != null) {
+            dfs(conexion.getParada(), limite - 1, visitadas);
+            conexion = conexion.getpNext();
+        }
+    }
+    
+  
+
 
     // Verificar cobertura total
     public boolean verificarCoberturaTotal() {
@@ -139,33 +106,20 @@ public class Grafo {
         }
     }
     
-    public void mostrarGrafo() {
-        Graph grafoVisual = new SingleGraph("Grafo de Transporte");
+   
 
-        Nodo actual = nodos.getCabeza();
-        while (actual != null) {
-            Parada parada = actual.getParada();
-            String nombreParada = parada.getNombre();
-
-            if (grafoVisual.getNode(nombreParada) == null) {
-                grafoVisual.addNode(nombreParada).setAttribute("ui.label", nombreParada);
-            }
-
-            Nodo conexionActual = parada.getConexiones().getCabeza();
-            while (conexionActual != null) {
-                Parada conexion = conexionActual.getParada();
-                String nombreConexion = conexion.getNombre();
-                String idArista = nombreParada + "-" + nombreConexion;
-
-                if (grafoVisual.getEdge(idArista) == null && grafoVisual.getEdge(nombreConexion + "-" + nombreParada) == null) {
-                    grafoVisual.addEdge(idArista, nombreParada, nombreConexion);
-                }
-
-                conexionActual = conexionActual.getpNext();
-            }
-            actual = actual.getpNext();
-        }
-        grafoVisual.display();
+    public ListaDobleEnlazada getNodos() {
+        return nodos;
     }
+
+    public int getT() {
+        return t;
+    }
+
+    public void setNodos(ListaDobleEnlazada nodos) {
+        this.nodos = nodos;
+    }
+    
+    
 }
 
