@@ -33,4 +33,20 @@ public class Parada {
         conexiones.agregarAlFinal(parada);
     }
     
+    public boolean tieneSucursal(){
+        return tieneSucursal;
+    }
+    
+    public void colocarSucursal(){
+        this.tieneSucursal = true;
+    }
+    
+    public void removerSucursal(){
+        this.tieneSucursal = false;
+        this.zonaComercial.vaciarLista(); // Limpia la zona comercial
+    }
+    
+    public ListaDobleEnlazada getZonaComercial(){
+        return zonaComercial;
+    }
 }

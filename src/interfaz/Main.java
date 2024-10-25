@@ -1,7 +1,6 @@
 
 package interfaz;
 
-import Lista.RedTransporte;
 import Lista.Linea;
 import Lista.Parada;
 import com.google.gson.JsonArray;
@@ -20,7 +19,8 @@ public class Main {
     }
   
     
-    public static void procesarRedDeTransporte(JsonObject jsonObject, RedTransporte red) {
+/*
+public static void procesarRedDeTransporte(JsonObject jsonObject, RedTransporte red) {
     // Iterar sobre las redes (e.g., Metro de Caracas, Transmilenio)
     for (String nombreRed : jsonObject.keySet()) {
         JsonArray lineasArray = jsonObject.getAsJsonArray(nombreRed);
@@ -78,5 +78,6 @@ public class Main {
         }
     }
 }
-    
+*/
+
 }

@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
-import Lista.RedTransporte;
 import Lista.Linea;
 import Lista.Parada;
 import java.awt.BorderLayout;
@@ -19,12 +18,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+/* 
 import static interfaz.Main.procesarRedDeTransporte;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-
+*/
 
 /**
  *
@@ -309,7 +309,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_principal1ActionPerformed
 
     private void subirarchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subirarchivoActionPerformed
-         JFileChooser seleccionarArchivo = new JFileChooser();
+/* 
+        JFileChooser seleccionarArchivo = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter(" Archivos JSON", "json");
         seleccionarArchivo.setFileFilter(filtro);
         int val = seleccionarArchivo.showOpenDialog(null);
@@ -337,6 +338,7 @@ public class Menu extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null,"Archivo no seleccionado");
         }
+ */
     }//GEN-LAST:event_subirarchivoActionPerformed
     private void setDate(){
         Calendar fechaActual = Calendar.getInstance();
