@@ -43,4 +43,32 @@ public static String readJsonFile(String filePath) {
         }
     }
 
-   
+  public static void printLineasYEstaciones(JsonElement jsonElement) {
+        if (jsonElement.isJsonObject()) {
+            JsonObject jsonObject = jsonElement.getAsJsonObject(); 
+            JsonArray lineas = jsonObject.getAsJsonArray("Metro de Caracas"); 
+            for (JsonElement lineaElement : lineas) {
+                JsonObject linea = lineaElement.getAsJsonObject();                                
+                for (String nombreLinea : linea.keySet()) {
+                    System.out.println("Línea: " + nombreLinea); 
+                    JsonArray estaciones = linea.getAsJsonArray(nombreLinea);                     
+                    for (JsonElement estacionElement : estaciones) {
+                        if (estacionElement.isJsonObject()) {                            
+                            JsonObject estacionObj = estacionElement.getAsJsonObject(); 
+                            for (String estacionNombre : estacionObj.keySet()) {                                
+                                System.out.println("Estacion " + estacionNombre + " / " + estacionObj.get(estacionNombre).getAsString());
+                            }
+                        } else {
+                            
+                            String nombreEstacion = estacionElement.getAsString();
+                            System.out.println("Estación: " + nombreEstacion);
+                        }
+                    }
+                }
+            }
+        } else {
+            
+            System.out.println("El contenido no es un objeto JSON válido.");
+        }
+    }
+} 
