@@ -29,5 +29,18 @@ public class JsonReader {
             printLineasYEstaciones(jsonElement); 
         }
     }
+public static String readJsonFile(String filePath) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            StringBuilder jsonContent = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonContent.append(line); 
+            }
+            return jsonContent.toString(); 
+        } catch (IOException e) {
+            System.out.println("Error leyendo archivo JSON: " + e.getMessage()); 
+            return null; 
+        }
+    }
 
    
