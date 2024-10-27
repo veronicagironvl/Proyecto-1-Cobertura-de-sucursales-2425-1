@@ -20,26 +20,13 @@ import java.io.IOException;
 
 public class JsonReader {
         
-    
-    /*
-    NOTA: La ruta va a ser el archivo JSON que le quieras pasar. Si metes el de Bogota y Caracas en la carpeta del proyecto,
-    bastara ponerlo como te explico abajo: Nombre.json
-    
-    En cambio, si usas el jFileChooser para que escoja el archivo, la ruta que te devuelva es la que le pasaras a esta funcion.
-    
-    Ademas, para crear los objetos tienen mas abajo en el ultimo metodo explicado que variables guardan los nombres de las lineas y
-    los de las estaciones para que puedan usarlos.
-    */
     public  void leerArchivo(String ruta) {
-        // Definimos la ruta del archivo JSON que se va a leer
-        String filePath = "Caracas.json"; // Si pones el archivo dentro de la carpeta del proyecto, deberia leertelo asi      
-        // Leemos el contenido del archivo
+        String filePath = "Caracas.json"; 
         String jsonContent = readJsonFile(filePath);
         
-        // Si encuentra y lee el archivo, convertimos el contenido en un elemento Json (basicamente un diccionario)
         if (jsonContent != null) {
-            JsonElement jsonElement = JsonParser.parseString(jsonContent); // Convertimos el String a JSON
-            printLineasYEstaciones(jsonElement); // Llamamos al metodo para leer cada linea y estacion
+            JsonElement jsonElement = JsonParser.parseString(jsonContent); 
+            printLineasYEstaciones(jsonElement); 
         }
     }
 
