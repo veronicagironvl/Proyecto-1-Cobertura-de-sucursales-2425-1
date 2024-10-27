@@ -6,7 +6,7 @@ package lectorjson;
 
 /**
  *
- * @author andre
+ * @author kelly
  */
 public class LectorJSON {
 
