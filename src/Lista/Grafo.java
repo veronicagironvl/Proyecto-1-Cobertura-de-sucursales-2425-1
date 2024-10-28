@@ -15,12 +15,51 @@ import org.graphstream.graph.Node;
 
 
 public class Grafo {
-    private ListaDobleEnlazada nodos; // Lista doblemente enlazada que contiene las paradas
+   private ListaDobleEnlazada nodos; // Lista doblemente enlazada que contiene las paradas
     private int t; // Valor de cobertura de las sucursales
+    private int[][] adj; // Matriz de adyacencia
+    private int numVertices;
     
     // Constructor que inicializa la lista de nodos
     public Grafo(){
         this.nodos = new ListaDobleEnlazada();
+    }
+
+
+    // Constructor que inicializa el grafo con un número de vértices
+    public Grafo(int v) {
+        numVertices = v;
+        adj = new int[v][v]; // Matriz de adyacencia
+    }
+
+    // Método para agregar una arista entre dos vértices
+    public void agregarArista(int origen, int destino) {
+        adj[origen][destino] = 1; // Conexión de origen a destino
+        adj[destino][origen] = 1; // Conexión de destino a origen (grafo no dirigido)
+    }
+
+    // Método para obtener los vecinos de un vértice
+    public int[] obtenerVecinos(int vertice) {
+        int[] vecinos = new int[numVertices];
+        int contador = 0;
+
+        for (int i = 0; i < numVertices; i++) {
+            if (adj[vertice][i] == 1) { // Hay una conexión
+                vecinos[contador++] = i; // Agregar el vecino
+            }
+        }
+
+        // Devolver solo la parte relevante del arreglo
+        int[] resultado = new int[contador];
+        for (int i = 0; i < contador; i++) {
+            resultado[i] = vecinos[i];
+        }
+        return resultado;
+    }
+
+    // Método para obtener el número de vértices
+    public int getNumVertices() {
+        return numVertices;
     }
     
     // Agrega un nodo (parada) al grafo y asigna un valor inicial a t si es la primera vez
@@ -72,7 +111,29 @@ public class Grafo {
             conexion = conexion.getpNext();
         }
     }
+    //BFS para calcular cobertura de sucursal
+    public void BFS(int inicio) {
+        boolean[] visitado = new boolean[getNumVertices()];
+        int[] cola = new int[getNumVertices()];
+        int frente = 0, finalCola = 0;
 
+        visitado[inicio] = true;
+        cola[finalCola++] = inicio;
+
+        while (frente < finalCola) {
+            int vertice = cola[frente++]; // Desencolar
+            System.out.print(vertice + " "); // Procesar el vértice
+
+       int[] vecinos = obtenerVecinos(vertice);
+            for (int i = 0; i < vecinos.length; i++) {
+                int vecino = vecinos[i];
+                if (!visitado[vecino]) {
+                    visitado[vecino] = true;
+                    cola[finalCola++] = vecino; // Encolar
+                }
+            }
+        }
+    }
     // Verificar cobertura total
     public boolean verificarCoberturaTotal() {
         ListaDobleEnlazada sinCobertura = new ListaDobleEnlazada();
@@ -169,6 +230,4 @@ public class Grafo {
         }
         return paradasCubiertas;
     }
-    
 }
-
