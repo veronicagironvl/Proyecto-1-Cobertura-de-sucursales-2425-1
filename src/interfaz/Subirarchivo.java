@@ -4,6 +4,7 @@
  */
 package interfaz;
 
+import Lista.Grafo;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,24 +12,37 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import Lista.Parada;
-import Lista.Conexion;
 import Lista.Linea;
 import Lista.ListaDobleEnlazada;
-import Lista.ListaParada;
 import Lista.Listalinea;
+import Lista.Nodo;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+//import javax.swing.JPanel();
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.swing_viewer.SwingViewer;
+import org.graphstream.ui.swing_viewer.ViewPanel;
+import org.graphstream.graph.Node;
+
 /**
  *
  * @author rtkn0_z8ls
  */
 public class Subirarchivo extends javax.swing.JPanel {
+      private Principal principal;
       private File selectedFile;
     /**
      * Creates new form Subirfile
+     * @param principal
      */
-    public Subirarchivo() {
+    public Subirarchivo(Principal principal) {
         initComponents();
+        this.principal = principal;
+        
+        
         
     }
 
@@ -49,6 +63,7 @@ public class Subirarchivo extends javax.swing.JPanel {
         separadorazul = new javax.swing.JLabel();
         nombrearchivo = new javax.swing.JLabel();
         image = new javax.swing.JLabel();
+        panelGrafVisual = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1032, 438));
@@ -110,6 +125,7 @@ public class Subirarchivo extends javax.swing.JPanel {
 
         image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/map (1).png"))); // NOI18N
         add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -110, 1120, 660));
+        add(panelGrafVisual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 610, 410));
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionararchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionararchivoActionPerformed
@@ -131,10 +147,13 @@ public class Subirarchivo extends javax.swing.JPanel {
             //SE MUESTRA UN MENSAJE DE ERROR EN CASO DE QUE NO SE HAYA SELECCIONADO NINGUN ARCHIVO
             JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo primero");}
         else{
-            //Lectura del Json
-            String filePath = selectedFile.getAbsolutePath();
+            // Inicializar las listas
             Listalinea listalinea = new Listalinea();
             ListaDobleEnlazada listaparada = new ListaDobleEnlazada();
+            this.principal.grafo = new Grafo();
+        
+            //Lectura del Json
+            String filePath = selectedFile.getAbsolutePath();
             try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -154,6 +173,7 @@ public class Subirarchivo extends javax.swing.JPanel {
                                 String[] parada = entry.split(":");
                                 for (String paradanew : parada) {
                                     listaparada.agregarAlFinal(new Parada(paradanew.trim()));
+                                    this.principal.grafo.agregarNodo(new Parada(paradanew.trim()));
                                 }
                             }
                         }
@@ -161,6 +181,7 @@ public class Subirarchivo extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(null,"Los archivos se han cargado correctamente");
                 nombrearchivo.setText(selectedFile.getName());
+                mostrarGrafoActionPerformed(evt);
             } catch(HeadlessException | IOException e ){
                 JOptionPane.showMessageDialog(null,"Error al leer el archivo: "+e.getMessage());
             }
@@ -180,8 +201,13 @@ public class Subirarchivo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel nombrearchivo;
+    private javax.swing.JPanel panelGrafVisual;
     private javax.swing.JButton seleccionararchivo;
     private javax.swing.JLabel separadorazul;
     private javax.swing.JButton subirfile;
     // End of variables declaration//GEN-END:variables
+
+    private void mostrarGrafoActionPerformed(ActionEvent evt) {
+      
+    }
 }

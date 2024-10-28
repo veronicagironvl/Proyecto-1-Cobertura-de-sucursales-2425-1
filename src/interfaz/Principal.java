@@ -18,11 +18,13 @@ import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.ViewPanel;
 import org.graphstream.graph.Node;
 import java.awt.*;
+import java.io.File;
 import javax.swing.JPanel;
 
 public final class Principal extends javax.swing.JPanel {
     
-    private Grafo grafo; 
+    public Grafo grafo; 
+    private File selectedFile;
 
     public Principal() {
         initComponents();
@@ -157,7 +159,7 @@ public final class Principal extends javax.swing.JPanel {
                 mostrarGrafoActionPerformed(evt);
             }
         });
-        add(mostrarGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 140, 50));
+        add(mostrarGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 140, 50));
 
         separadorazul.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         separadorazul.setForeground(new java.awt.Color(102, 255, 204));
@@ -173,6 +175,11 @@ public final class Principal extends javax.swing.JPanel {
         add(actualizarT, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 230, -1, 30));
 
         verificarCoberturaTotal.setText("Verificar Cobertura Total");
+        verificarCoberturaTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verificarCoberturaTotalActionPerformed(evt);
+            }
+        });
         add(verificarCoberturaTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 380, -1, -1));
         add(panelGrafVisual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 610, 410));
     }// </editor-fold>//GEN-END:initComponents
@@ -206,6 +213,7 @@ public final class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_actualizarTActionPerformed
 
     private void mostrarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarGrafoActionPerformed
+       
         Graph grafoVisual = new SingleGraph("Grafo de Transporte");
 
         // Obtener las listas de paradas con sucursales y cubiertas por zona comercial
@@ -277,6 +285,10 @@ public final class Principal extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Parada no encontrada en la red.");
         }
     }//GEN-LAST:event_colocarSucursalActionPerformed
+
+    private void verificarCoberturaTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verificarCoberturaTotalActionPerformed
+       
+    }//GEN-LAST:event_verificarCoberturaTotalActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

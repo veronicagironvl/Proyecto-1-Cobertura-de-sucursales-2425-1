@@ -6,7 +6,7 @@ package interfaz;
 import java.awt.BorderLayout;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
-import javax.swing.JFileChooser;
+/*import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -17,14 +17,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.JsonParser;*/
 
 /**
  *
  * @author rtkn0_z8ls
  */
 public class Menu extends javax.swing.JFrame {
-
+     private Principal v1;
     /**
      * Creates new form Menu
      */
@@ -32,7 +32,7 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         setDate();
         showprincipal();
-        
+        this.v1 = new Principal();
         
     }
     public void showprincipal(){
@@ -290,19 +290,19 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_sucursalesActionPerformed
 
     private void principal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_principal1ActionPerformed
-        Principal v1 = new Principal();
-        v1.setVisible(true);
-        v1.setSize(1032,438);
-        v1.setLocation(0,0);
+
+        this.v1.setVisible(true);
+        this.v1.setSize(1032,438);
+        this.v1.setLocation(0,0);
         
         principal.removeAll();
-        principal.add(v1, BorderLayout.CENTER);
+        principal.add(this.v1, BorderLayout.CENTER);
         principal.revalidate();
         principal.repaint();
     }//GEN-LAST:event_principal1ActionPerformed
 
     private void subirarchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subirarchivoActionPerformed
-        Subirarchivo v2 = new Subirarchivo();
+        Subirarchivo v2 = new Subirarchivo(this.v1);
         v2.setVisible(true);
         v2.setSize(1032,438);
         v2.setLocation(0,0);
